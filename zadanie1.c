@@ -14,13 +14,26 @@ void *alloc(const char *fmt,...){
 	int i;
 	int ilosci = 0;
 	struct test *p  = malloc (sizeof*p);
+	size_t bytes_needed = 0;
 	va_start(ap,fmt);
 
+	for(i=0;i<strlen(fmt);i++){
+		switch(fmt[i])
+		case 'i':
+			bytes_needed += sizeof int;
+			break;
+		case 'd':
+			bytes_needed += sizeof double;
+			break;
+
+	}
+	
+	/* dopisac poprawki */
 	for(i=0;i<strlen(fmt);i++){
 		if(fmt[i]=='i'){
 			if(ilosci==0) p->i1=va_arg(ap,int);
 			else if(ilosci==1) p->i2=va_arg(ap,int);
-			else if(ilosci==2) p->i3=va_arg(ap,int);
+			else if(ilosci==2) p->i3=va_arg(ap,char);
 			ilosci++;
 		}
 		else if(fmt[i]=='d') p->d=va_arg(ap,double);
